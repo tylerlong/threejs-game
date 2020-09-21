@@ -1,33 +1,39 @@
 import './index.css';
 
-import * as THREE from 'three';
+import {
+  BoxGeometry,
+  Mesh,
+  MeshBasicMaterial,
+  PerspectiveCamera,
+  Scene,
+  WebGLRenderer,
+} from 'three';
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-  75,
+const scene = new Scene();
+const camera = new PerspectiveCamera(
+  50,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
 );
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshBasicMaterial({color: 0x00ff00});
-const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
+const geometry = new BoxGeometry();
+const material = new MeshBasicMaterial({color: 0x00ff00});
+const mesh = new Mesh(geometry, material);
+scene.add(mesh);
 
 camera.position.z = 5;
 
-const animate = function () {
-  requestAnimationFrame(animate);
-
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
-
+const animate = () => {
+  mesh.rotation.x += 0.01;
+  mesh.rotation.y += 0.01;
   renderer.render(scene, camera);
+
+  requestAnimationFrame(animate);
 };
 
 animate();
