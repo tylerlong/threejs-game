@@ -1,7 +1,8 @@
 {
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --progress --colors"
+    "start": "webpack-dev-server --progress --colors",
+    "build": "webpack --progress --colors"
   },
   "dependencies": {
     "three": "^0.120.1"
