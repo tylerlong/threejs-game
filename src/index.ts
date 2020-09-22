@@ -1,15 +1,19 @@
 import './index.css';
 
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
+
+import knightAsset from './assets/knight/gltf/KnightCharacter.glb';
+
 import {
-  BoxGeometry,
-  Mesh,
-  MeshBasicMaterial,
+  Color,
+  DirectionalLight,
   PerspectiveCamera,
   Scene,
   WebGLRenderer,
 } from 'three';
 
 const scene = new Scene();
+scene.background = new Color('white');
 const camera = new PerspectiveCamera(
   50,
   window.innerWidth / window.innerHeight,
@@ -21,19 +25,28 @@ const renderer = new WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const geometry = new BoxGeometry();
-const material = new MeshBasicMaterial({color: 0x00ff00});
-const mesh = new Mesh(geometry, material);
-scene.add(mesh);
+camera.position.set(0, 0, 20);
 
-camera.position.z = 5;
+const gltfLoader = new GLTFLoader();
+
+gltfLoader.load(knightAsset, gltf => {
+  scene.add(gltf.scene);
+});
 
 const animate = () => {
-  mesh.rotation.x += 0.01;
-  mesh.rotation.y += 0.01;
   renderer.render(scene, camera);
-
   requestAnimationFrame(animate);
 };
 
 animate();
+
+const addLight = (x: number, y: number, z: number) => {
+  const color = 0xffffff;
+  const intensity = 1;
+  const light = new DirectionalLight(color, intensity);
+  light.position.set(x, y, z);
+  scene.add(light);
+  scene.add(light.target);
+};
+addLight(10, 10, 10);
+addLight(-10, 10, 10);
