@@ -1,6 +1,7 @@
 import './index.css';
 
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 
 import knightAsset from './assets/knight/gltf/KnightCharacter.glb';
 
@@ -50,3 +51,7 @@ const addLight = (x: number, y: number, z: number) => {
 };
 addLight(10, 10, 10);
 addLight(-10, 10, 10);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 5, 0);
+controls.update();
