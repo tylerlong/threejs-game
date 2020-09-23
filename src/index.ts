@@ -53,10 +53,9 @@ const addLight = (x: number, y: number, z: number) => {
   const light = new DirectionalLight(color, intensity);
   light.position.set(x, y, z);
   scene.add(light);
-  scene.add(light.target);
 };
-addLight(10, 10, 10);
-addLight(-10, 10, 10);
+addLight(10, 10, 11);
+addLight(-10, 10, 11);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 5, 0);
