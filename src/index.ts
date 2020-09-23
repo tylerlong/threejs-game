@@ -8,6 +8,7 @@ import knightAsset from './assets/knight/gltf/KnightCharacter.glb';
 import {
   Color,
   DirectionalLight,
+  Group,
   PerspectiveCamera,
   Scene,
   WebGLRenderer,
@@ -16,30 +17,35 @@ import {
 const scene = new Scene();
 scene.background = new Color('white');
 const camera = new PerspectiveCamera(
-  50,
+  90,
   window.innerWidth / window.innerHeight,
   0.1,
-  1000
+  100
 );
 
 const renderer = new WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-camera.position.set(0, 0, 20);
+camera.position.set(0, 0, 10);
 
 const gltfLoader = new GLTFLoader();
 
+let knightGroup: Group;
 gltfLoader.load(knightAsset, gltf => {
-  scene.add(gltf.scene);
+  knightGroup = gltf.scene;
+  scene.add(knightGroup);
 });
 
-const animate = () => {
+const animate = (time: number) => {
+  time /= 1000;
+  if (knightGroup) {
+    knightGroup.rotation.y = time;
+  }
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
 };
-
-animate();
+requestAnimationFrame(animate);
 
 const addLight = (x: number, y: number, z: number) => {
   const color = 0xffffff;
